@@ -11,4 +11,12 @@ const serverConfig: ApplicationConfig = {
   ]
 };
 
+
+export function getPrerenderParams() {
+  return [
+    { category: 'olahraga', slug: 'ngeri-ngeri-sedap-lini-serang-kanan-timnas-indonesia' },
+    { category: 'nasional', slug: 'fakta-fakta-kasus-inses-grup-facebook-fantasi-sedarah-dan-suka-duka' },
+  ];
+}
+
 export const config = mergeApplicationConfig(appConfig, serverConfig);
