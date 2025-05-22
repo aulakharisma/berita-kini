@@ -14,10 +14,7 @@ export const routes: Routes = [
       },
       {
         path: ':category/:slug',
-        component: PageDetailComponent,
-        data: {
-          renderMode: 'no-prerender' 
-        }
+        component: PageDetailComponent
       },
     ]
   }
