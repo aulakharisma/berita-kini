@@ -23,15 +23,29 @@ export class NewsDetailComponent implements OnInit {
     private newsService: NewsService
   ) {}
 
-  ngOnInit(): void {
-    const category = this.route.snapshot.paramMap.get('category')!;
-    const slug = this.route.snapshot.paramMap.get('slug')!;
+  // ngOnInit(): void {
+  //   const category = this.route.snapshot.paramMap.get('category')!;
+  //   const slug = this.route.snapshot.paramMap.get('slug')!;
 
-    this.newsService.getCnnNewsByCategory(category).subscribe(posts => {
-      this.news = posts.find(post => this.toSlug(post.title) === slug) || null;
-      this.loading = false;
+  //   this.newsService.getCnnNewsByCategory(category).subscribe(posts => {
+  //     this.news = posts.find(post => this.toSlug(post.title) === slug) || null;
+  //     this.loading = false;
+  //   });
+  // }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const category = params.get('category')!;
+      const slug = params.get('slug')!;
+      this.loading = true;
+
+      this.newsService.getCnnNewsByCategory(category).subscribe(posts => {
+        this.news = posts.find(post => this.toSlug(post.title) === slug) || null;
+        this.loading = false;
+      });
     });
   }
+
 
   toSlug(title: string): string {
     return title
@@ -43,7 +57,7 @@ export class NewsDetailComponent implements OnInit {
 
   // Getter untuk render deskripsi dengan <br>
   get descriptionWithBreaks(): string {
-    return this.staticContent.replace(/\[br\]\[\/br\]/g, '<br>');
+    return this.staticContent.replace(/\[br\]\[\/br\]/g, '<br class="mb-5">');
   }
 
 }

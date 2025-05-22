@@ -14,7 +14,10 @@ export const routes: Routes = [
       },
       {
         path: ':category/:slug',
-        component: PageDetailComponent, // Komponen detail berita
+        component: PageDetailComponent,
+        data: {
+          renderMode: 'no-prerender' 
+        }
       },
     ]
   }
