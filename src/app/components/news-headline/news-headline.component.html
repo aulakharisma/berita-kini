@@ -1,0 +1,55 @@
+<div *ngIf="headline" class="container mx-auto mt-7 py-5 gap-10 flex flex-col lg:flex-row">
+  <!-- Kiri -->
+  <div class="md:flex-1 max-w-lg">
+    <p class="text-base font-medium text-gray-500 font-[Inter,sans-serif]">Headline</p>
+    <h1 class="text-2xl md:text-4xl font-bold my-5 font-[Nunito,sans-serif]">{{ headline.title }}</h1>
+    <p class="text-gray-600 mb-3 font-[Inter,sans-serif]">
+      {{ headline.description }}
+    </p>
+    <p class="text-sm text-gray-500 mb-6">
+      {{ headline.pubDate | date: 'dd MMMM yyyy' }}
+    </p>
+    <a
+      [routerLink]="['/', headline.category, toSlug(headline.title)]"
+      class="text-blue-600 font-medium hover:underline font-[Inter,sans-serif]"
+    >
+      Baca Selengkapnya ↗
+    </a>
+  </div>
+
+  <!-- Kanan (Gambar) -->
+  <div class="w-full lg:w-[637px] lg:h-[417px] flex-shrink-0 ml-auto">
+    <img
+      [src]="headline.thumbnail"
+      [alt]="headline.title"
+      class="w-full h-full rounded-3xl object-cover"
+    />
+  </div>
+</div>
+
+<!-- Pagination headline -->
+<div class="flex justify-center items-center gap-7 text-base text-gray-500 mt-10 select-none font-[Inter,sans-serif]">
+  <!-- Previous Button -->
+  <button
+    (click)="prevHeadline()"
+    [disabled]="currentHeadlineIndex === 0"
+    class="disabled:opacity-30 px-2"
+  >
+    &lt;
+  </button>
+
+  <!-- Text -->
+  <span>{{ currentHeadlineIndex + 1 }}</span>
+  <span>dari</span>
+  <span>{{ totalPages }}</span>
+
+  <!-- Next Button -->
+  <button
+    (click)="nextHeadline()"
+    [disabled]="currentHeadlineIndex === totalPages - 1"
+    class="disabled:opacity-30 px-2"
+  >
+    &gt;
+  </button>
+</div>
+

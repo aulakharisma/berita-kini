@@ -1,0 +1,18 @@
+<section class="container mx-auto px-4 py-6 ">
+
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-20">
+    <!-- Konten Detail -->
+    <div class="md:col-span-8">
+      <app-news-detail></app-news-detail>
+    </div>
+  
+    <!-- Sidebar -->
+    <div class="md:col-span-4">
+      <app-popular-news [isDetailPage]="true"></app-popular-news>
+    </div>
+  </div>
+
+  <app-recomendation-news></app-recomendation-news>
+
+
+</section>

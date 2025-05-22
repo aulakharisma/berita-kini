@@ -1,0 +1,56 @@
+<div class="font-[Inter,sans-serif]">
+  <!-- Jika loading -->
+  <div *ngIf="loading" class="text-center text-gray-500">Memuat detail berita...</div>
+
+  <!-- Jika berita ditemukan -->
+  <div *ngIf="!loading && news">
+    <!-- Breadcrumb -->
+    <div class="text-sm text-gray-500 mb-3">
+      <a routerLink="/" class="hover:underline">Beranda</a> &gt; 
+      <a routerLink="/nasional" class="hover:underline">Nasional</a> &gt; 
+      <span class="text-gray-700 font-medium">Detail</span>
+    </div>
+
+    <!-- Judul -->
+    <h1 class="font-[Nunito,sans-serif] text-3xl font-bold leading-tight mb-2">{{ news.title }}</h1>
+
+    <!-- Kategori dan Tanggal -->
+    <p class="text-sm text-blue-600 mb-4">
+      <strong>Politik</strong> · {{ news.pubDate | date:'dd MMM yyyy' }}
+    </p>
+
+    <!-- Gambar -->
+    <img 
+      *ngIf="news.thumbnail" 
+      [src]="news.thumbnail" 
+      alt="Thumbnail"
+      class="w-full max-h-[400px] object-cover rounded mb-4"
+    />
+
+    <!-- Caption Gambar -->
+    <p class="text-xs text-gray-500 mb-6">Sumber: CNN Indonesia</p>
+
+    <!-- Isi -->
+    <div 
+      class="text-lg text-gray-800 leading-relaxed space-y-4"
+      [innerHTML]="descriptionWithBreaks">
+    </div>
+    
+    <!-- Link -->
+    <div class="mt-6">
+      <a 
+        [href]="news.link" 
+        target="_blank" 
+        rel="noopener" 
+        class="text-blue-600 underline hover:text-blue-800"
+      >
+        Baca selengkapnya di sumber
+      </a>
+    </div>
+  </div>
+
+  <!-- Tidak ada berita -->
+  <div *ngIf="!loading && !news" class="text-center text-red-500 font-medium">
+    Berita tidak ditemukan.
+  </div>
+</div>

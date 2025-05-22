@@ -1,0 +1,60 @@
+<nav
+  [class]="'sticky py-3 top-0 z-10000 transition-all duration-300 ease-in-out ' +
+          (isScrolled ? 'bg-[#0090FF] shadow-md' : 'bg-white shadow-xs border-gray-100')"
+>
+
+  <div class="container mx-auto flex flex-wrap items-center justify-between py-4 font-[Inter,sans-serif]">
+    <a routerLink="/" class="flex items-center space-x-3">
+      <img [src]="isScrolled ? '/img/logo/logo-white.svg' : '/img/logo/logo.svg'" class="h-10 transition-all duration-300" alt="Logo Berita Kini" />
+    </a>
+
+    <button
+      type="button"
+      class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none"
+      (click)="toggleMenu()"
+    >
+      <span class="sr-only">Open main menu</span>
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 17 14">
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M1 1h15M1 7h15M1 13h15"
+        />
+      </svg>
+    </button>
+
+    <ul
+      [ngClass]="{
+        'hidden': !isMenuOpen,
+        'block': isMenuOpen,
+        'md:flex': true
+      }"
+      class="space-x-10"
+    >
+      <!-- Beranda -->
+      <li>
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          #rla="routerLinkActive"
+          [ngClass]="getNavLinkClass(rla.isActive)"
+          class="hover:underline"
+        >Beranda</a>
+      </li>
+
+      <!-- Semua kategori CNN -->
+      <li *ngFor="let cat of categories">
+        <a
+          [href]="cat.path"
+          target="_blank"
+          [ngClass]="getTextColor() + ' hover:underline'"
+        >
+          {{ formatName(cat.name) }}
+        </a>
+      </li>
+    </ul>
+
+  </div>
+</nav>

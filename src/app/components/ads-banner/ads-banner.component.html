@@ -1,0 +1,19 @@
+<!-- Slider Container -->
+<div class="container mx-auto rounded-xl overflow-hidden mt-10">
+  <!-- Slide Image -->
+  <img
+    [src]="slides[currentIndex].imageUrl"
+    class="w-full object-cover"
+  />
+</div>
+
+<!-- Dots di luar slider -->
+<div class="flex justify-center mt-4 space-x-3 mb-20">
+  <button
+    *ngFor="let slide of slides; let i = index"
+    (click)="goToSlide(i)"
+    [class.bg-blue-400]="i === currentIndex"
+    [class.bg-gray-400]="i !== currentIndex"
+    class="w-3 h-3 rounded-full focus:outline-none"
+  ></button>
+</div>

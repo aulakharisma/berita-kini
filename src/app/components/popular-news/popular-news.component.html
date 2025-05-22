@@ -1,0 +1,54 @@
+<div *ngIf="loading" class="container mx-auto text-center text-sm text-gray-500 py-4">Memuat berita...</div>
+
+<div *ngIf="!loading && popularNews.length"
+    [ngClass]="{
+      'my-20': !isDetailPage,
+      'my-10': isDetailPage
+    }"
+  class="container mx-auto ">
+  <h2 class="font-[Nunito,sans-serif] text-lg font-bold mb-10 border-l-4 border-blue-500 pl-2">Berita Terpopuler</h2>
+
+   <div
+    [ngClass]="{
+      'grid md:grid-cols-2 lg:grid-cols-3 gap-10': !isDetailPage,
+      'grid-row gap-y-5': isDetailPage
+    }"
+  >
+  <!-- <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10"> -->
+  <div *ngFor="let news of popularNews; let i = index" class="relative flex flex-col md:flex-row gap-4 lg:pr-5 lg:border-r lg:border-gray-200 items-start">
+
+    <!-- Nomor urut -->
+    <div class="absolute -top-3 -left-3 bg-gray-700 text-white w-8 h-8 text-sm flex items-center justify-center rounded-full z-10">
+      {{ i + 1 }}
+    </div>
+
+    <!-- Gambar -->
+    <img [src]="news.thumbnail" alt="Gambar Berita"
+         class="w-full md:w-30 h-30 object-cover rounded-xl shrink-0">
+
+    <!-- Konten Teks -->
+    <div class="flex flex-col justify-between">
+      <!-- Judul -->
+      <a
+        [routerLink]="['/', news.category, toSlug(news.title)]"
+        class="text-lg font-semibold hover:underline line-clamp-2"
+      >
+        {{ news.title }}
+      </a>
+
+      <!-- Kategori dan Tanggal -->
+      <div class="font-[Nunito,sans-serif] text-sm text-gray-500 flex items-center gap-2 mt-2">
+        <span class="text-blue-600 font-semibold">{{ news.category }}</span>
+        <span>•</span>
+        <span>{{ news.pubDate | date: 'dd MMM yyyy' }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div *ngIf="!loading && !popularNews.length" class="text-center text-sm text-gray-500 py-4">
+  Tidak ada berita yang ditemukan.
+</div>
+

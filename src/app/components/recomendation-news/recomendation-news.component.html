@@ -1,0 +1,93 @@
+<!-- Loading -->
+<div *ngIf="loading" class="container mx-auto text-center py-4">
+  Memuat rekomendasi berita...
+</div>
+
+<!-- Main Content -->
+<div *ngIf="!loading && newsList.length" class="font-[Inter,sans-serif] container mx-auto space-y-8 py-10">
+
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <h2 class="font-[Nunito,sans-serif] text-lg font-bold border-l-4 border-blue-500 pl-2">
+      Rekomendasi Untuk Anda
+    </h2>
+    <input
+      [(ngModel)]="searchTerm"
+      (input)="onSearchChange()"
+      type="text"
+      placeholder="Cari disini..."
+      class="border border-gray-300 text-gray-400 rounded-lg px-4 py-3 w-full md:w-100 focus:outline-none focus:ring-2 focus:ring-blue-300"
+    />
+  </div>
+
+  <!-- Grid Berita -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+    <div *ngFor="let news of displayedNews" class="flex flex-col gap-2">
+      <img
+        [src]="news.thumbnail"
+        alt="Gambar"
+        class="rounded-xl w-full h-48 object-cover"
+      />
+
+      <a
+        [routerLink]="['/', news.category, toSlug(news.title)]"
+        class="text-lg font-semibold hover:underline line-clamp-2"
+      >
+        {{ news.title }}
+      </a>
+
+
+      <div class="font-[Inter,sans-serif] text-sm text-gray-500 flex items-center gap-2">
+        <span class="text-blue-600 font-semibold">{{ news.category }}</span>
+        <span>•</span>
+        <span>{{ news.pubDate | date: 'dd MMM yyyy' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info Jumlah Data + Pagination -->
+  <div class="font-[Inter,sans-serif] flex flex-col md:flex-row justify-between items-center my-20 gap-4 text-sm text-gray-600">
+    <!-- Info -->
+    <div>
+      Showing {{ (currentPage - 1) * pageSize + 1 }} to
+      {{ getMin(currentPage * pageSize, filteredNews.length) }} of
+      {{ filteredNews.length }} results
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-center items-center gap-2">
+      <button
+        (click)="onPageChange(currentPage - 1)"
+        [disabled]="currentPage === 1"
+        class="px-3 py-1 rounded hover:text-blue-500 disabled:opacity-50"
+      >
+        &larr; Previous
+      </button>
+
+      <ng-container *ngFor="let page of visiblePages">
+        <button
+          *ngIf="page !== '...' else ellipsisTpl"
+          (click)="handlePageClick(page)"
+          [class.bg-[#0090FF]]="currentPage === page"
+          [class.text-white]="currentPage === page"
+          class="px-3 py-1 rounded-sm hover:text-blue-500"
+        >
+          {{ page }}
+        </button>
+      </ng-container>
+
+      <ng-template #ellipsisTpl>
+        <span class="px-2 text-gray-400">...</span>
+      </ng-template>
+
+      <button
+        (click)="onPageChange(currentPage + 1)"
+        [disabled]="currentPage === totalPages"
+        class="px-3 py-1 rounded hover:text-blue-500 disabled:opacity-50"
+      >
+        Next &rarr;
+      </button>
+    </div>
+  </div>
+
+</div>
