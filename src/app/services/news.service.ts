@@ -1,4 +1,3 @@
-// src/app/services/news.service.ts
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
@@ -88,6 +87,42 @@ export class NewsService {
         return allPosts.sort(() => 0.5 - Math.random()).slice(0, count);
       })
     );
+  }
+
+  // fungsi untuk buat slug dari title
+  private slugify(text: string): string {
+    return text
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]+/g, '');
+  }
+  
+  // method baru untuk ambil semua category + slug
+  getAllCategorySlugPairs(): Observable<{ category: string; slug: string }[]> {
+    // buat array observable untuk tiap kategori
+    const requests = this.cnnCategories.map(category =>
+      this.http.get<any>(`${this.apiUrl}cnn/${category}/`).pipe(
+        map(res => {
+          // dari API dapatkan posts, lalu buat slug dari title tiap post
+          return res.data.posts.map((post: any) => ({
+            category,
+            slug: this.slugify(post.title),
+          }));
+        })
+      )
+    );
+
+    // gabungkan semua array hasil map per kategori jadi satu array
+    return new Observable(observer => {
+      // gabungkan semua request, flatten hasilnya
+      Promise.all(requests.map(req => req.toPromise()))
+        .then(results => {
+          const combined = results.flat();
+          observer.next(combined);
+          observer.complete();
+        })
+        .catch(err => observer.error(err));
+    });
   }
 
 
