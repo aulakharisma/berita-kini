@@ -16,7 +16,6 @@ export const routes: Routes = [
         path: ':category/:slug',
         component: PageDetailComponent, // Komponen detail berita
       },
-      // Tambahkan route detail news di sini nanti
     ]
   }
 ];
