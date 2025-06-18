@@ -17,7 +17,7 @@ export const routes: Routes = [
         path: ':category/:slug',
         component: PageDetailComponent
       },
-      { path: ':category', component: ListNewsComponent },
+      { path: ':category', component: ListNewsComponent, data: { renderMode: 'ssr' } },
       { path: '', redirectTo: '/terbaru', pathMatch: 'full' },
       { path: '**', redirectTo: '/terbaru' }
     ]
