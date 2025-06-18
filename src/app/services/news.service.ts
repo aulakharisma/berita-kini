@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { NewsCategory } from '../models/news.model';
 import { NewsApiResponse, NewsPost } from '../models/latest-news.model';
 import { forkJoin } from 'rxjs';
-
 
 @Injectable({ providedIn: 'root' })
 
@@ -45,7 +44,7 @@ export class NewsService {
       'gaya-hidup'
     ];
 
-    return of(categories.map(name => ({ name }))); // pakai 'of' dari RxJS
+    return of(categories.map(name => ({ name })));
   }
 
 
