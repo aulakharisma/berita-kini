@@ -16,16 +16,17 @@ export const serverRoutes: ServerRoute[] = [
 
   // 2. List berita per kategori (tanpa slug)
   {
-    path: ':category',
-    renderMode: RenderMode.Prerender,
-    async getPrerenderParams() {
-      const newsService = inject(NewsService);
-      const categories = await newsService.getCnnCategoriesRoutes().toPromise();
-      return categories.map((cat: any) => ({
-        category: cat.name
-      }));
-    }
+      path: ':category',
+      renderMode: RenderMode.Prerender,
+      async getPrerenderParams() {
+        const newsService = inject(NewsService);
+        const categories = await newsService.getCnnCategoriesRoutes().toPromise();
+        return categories.map((cat: any) => ({
+          category: cat.name
+        }));
+      }
   },
+
 
 
   {

@@ -34,12 +34,20 @@ export class NewsService {
   }
 
   getCnnCategoriesRoutes() {
-    return this.http.get<any>('https://api-berita-indonesia.vercel.app/cnn/terbaru').pipe(
-      map(res => res.data.channels.map((ch: any) => ({
-        name: ch.id
-      })))
-    );
+    const categories = [
+      'terbaru',
+      'nasional',
+      'internasional',
+      'ekonomi',
+      'olahraga',
+      'teknologi',
+      'hiburan',
+      'gaya-hidup'
+    ];
+
+    return of(categories.map(name => ({ name }))); // pakai 'of' dari RxJS
   }
+
 
   getLatestCnnNews(): Observable<NewsPost[]> {
     const category = 'terbaru';
