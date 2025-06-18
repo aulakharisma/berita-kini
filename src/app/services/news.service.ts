@@ -41,7 +41,7 @@ export class NewsService {
       'olahraga',
       'teknologi',
       'hiburan',
-      'gaya-hidup'
+      'gayaHidup'
     ];
 
     return of(categories.map(name => ({ name })));

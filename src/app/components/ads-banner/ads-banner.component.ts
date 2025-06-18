@@ -19,22 +19,23 @@ export class AdsBannerComponent {
       imageUrl: '/img/ads-banner/ads.png'
     },
     {
-      imageUrl: 'img/ads-banner/ads2.png'
+      imageUrl: 'img/ads-banner/ads2.jpg'
     },
     {
-      imageUrl: 'img/ads-banner/ads3.png'
+      imageUrl: 'img/ads-banner/ads3.jpg'
     }
   ];
-
-  next() {
-    this.currentIndex = (this.currentIndex + 1) % this.slides.length;
-  }
-
-  prev() {
-    this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
-  }
 
   goToSlide(index: number) {
     this.currentIndex = index;
   }
+
+  prevSlide() {
+    this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+  }
+
+  nextSlide() {
+    this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+  }
+
 }

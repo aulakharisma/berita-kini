@@ -1,19 +1,47 @@
 <!-- Slider Container -->
-<div class="container mx-auto rounded-xl overflow-hidden mt-10">
+<div class="container mx-auto mt-10 rounded-xl overflow-hidden relative">
   <!-- Slide Image -->
   <img
     [src]="slides[currentIndex].imageUrl"
-    class="w-full object-cover"
+    class="w-full object-cover h-32 md:h-120 transition duration-300"
+    alt="Slide Image"
   />
 </div>
 
-<!-- Dots di luar slider -->
-<div class="flex justify-center mt-4 space-x-3 mb-20">
-  <button
-    *ngFor="let slide of slides; let i = index"
-    (click)="goToSlide(i)"
-    [class.bg-blue-400]="i === currentIndex"
-    [class.bg-gray-400]="i !== currentIndex"
-    class="w-3 h-3 rounded-full focus:outline-none"
-  ></button>
+<!-- Controls & Indicator -->
+<div class="flex flex-col md:flex-row items-center justify-between mt-4 mb-20 container mx-auto px-4 space-y-4 md:space-y-0">
+  <!-- Dots -->
+  <div class="flex justify-center space-x-2">
+    <button
+      *ngFor="let slide of slides; let i = index"
+      (click)="goToSlide(i)"
+      [class.bg-blue-500]="i === currentIndex"
+      [class.bg-gray-400]="i !== currentIndex"
+      class="w-3 h-3 rounded-full focus:outline-none transition-colors"
+    ></button>
+  </div>
+
+  <!-- Navigation & Indicator -->
+  <div class="flex items-center space-x-4">
+    <!-- Previous -->
+    <button
+      (click)="prevSlide()"
+      class="text-sm px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 transition"
+    >
+      ‹
+    </button>
+
+    <!-- Indicator -->
+    <span class="text-sm text-gray-600">
+      {{ currentIndex + 1 }} / {{ slides.length }}
+    </span>
+
+    <!-- Next -->
+    <button
+      (click)="nextSlide()"
+      class="text-sm px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 transition"
+    >
+      ›
+    </button>
+  </div>
 </div>
