@@ -34,7 +34,7 @@
 
 export async function getPrerenderParams() {
   const responses = await Promise.all([
-    fetch('https://api-berita-indonesia.vercel.app/cnn'),
+    fetch('https://api-berita-indonesia.vercel.app'),
     fetch('https://api-berita-indonesia.vercel.app/cnn/terbaru'),
   ]);
 

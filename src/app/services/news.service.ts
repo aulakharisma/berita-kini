@@ -34,7 +34,7 @@ export class NewsService {
   }
 
   getCnnCategoriesRoutes() {
-    return this.http.get<any>('https://api-berita-indonesia.vercel.app/cnn').pipe(
+    return this.http.get<any>('https://api-berita-indonesia.vercel.app/cnn/terbaru').pipe(
       map(res => res.data.channels.map((ch: any) => ({
         name: ch.id
       })))
