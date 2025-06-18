@@ -15,3 +15,15 @@ export async function getPrerenderParams() {
 
   return params;
 }
+
+
+// Untuk daftar kategori: /:category
+export async function getPrerenderCategories() {
+  const apiUrl = 'https://api-berita-indonesia.vercel.app/cnn';
+  const response = await fetch(apiUrl);
+  const data = await response.json();
+
+  return data.data.channels.map((channel: any) => ({
+    category: channel.id, // atau `channel.slug` jika ada
+  }));
+}
