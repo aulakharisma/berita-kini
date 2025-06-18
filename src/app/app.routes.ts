@@ -14,31 +14,13 @@ export const routes: Routes = [
         path: '',
         component: HomeComponent
       },
-      // {
-      //   path: ':category/:slug',
-      //   component: PageDetailComponent
-      // },
-      // { 
-      //   path: ':category',
-      //   component: ListNewsComponent
-      // },
-      {
-        path: ':category',
-        component: ListNewsComponent,
-        data: {
-          prerender: {
-            entries: getPrerenderParams
-          }
-        }
-      },
       {
         path: ':category/:slug',
-        component: PageDetailComponent,
-        data: {
-          prerender: {
-            entries: getPrerenderParams
-          }
-        }
+        component: PageDetailComponent
+      },
+      { 
+        path: ':category',
+        component: ListNewsComponent
       },
       {
         path: '**',

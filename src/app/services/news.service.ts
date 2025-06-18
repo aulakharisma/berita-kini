@@ -33,6 +33,14 @@ export class NewsService {
     );
   }
 
+  getCnnCategoriesRoutes() {
+    return this.http.get<any>('https://api-berita-indonesia.vercel.app/cnn').pipe(
+      map(res => res.data.channels.map((ch: any) => ({
+        name: ch.id
+      })))
+    );
+  }
+
   getLatestCnnNews(): Observable<NewsPost[]> {
     const category = 'terbaru';
     return this.http.get<NewsApiResponse>(`${this.apiUrl}cnn/${category}/`).pipe(
@@ -125,7 +133,6 @@ export class NewsService {
     });
   }
 
-
-
+  
 
 }

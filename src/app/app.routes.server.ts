@@ -12,9 +12,22 @@ export const serverRoutes: ServerRoute[] = [
       const pairs = (await newsService.getAllCategorySlugPairs().toPromise()) || [];
       return pairs.map(item => ({ category: item.category, slug: item.slug }));
     }
-
-
   },
+
+  // 2. List berita per kategori (tanpa slug)
+  {
+    path: ':category',
+    renderMode: RenderMode.Prerender,
+    async getPrerenderParams() {
+      const newsService = inject(NewsService);
+      const categories = await newsService.getCnnCategoriesRoutes().toPromise();
+      return categories.map((cat: any) => ({
+        category: cat.name
+      }));
+    }
+  },
+
+
   {
     path: '**',
     renderMode: RenderMode.Prerender
