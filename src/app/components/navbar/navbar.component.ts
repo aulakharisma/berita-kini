@@ -42,10 +42,16 @@ export class NavbarComponent implements OnInit {
   }
 
   getNavLinkClass(isActive: boolean): string {
-    if (this.isScrolled) {
-      return isActive ? 'text-white font-semibold' : 'text-white font-light';
-    } else {
-      return isActive ? 'text-[#0090FF] font-semibold' : 'text-gray-400 font-light';
-    }
+  if (this.isMenuOpen) {
+    // Saat menu mobile terbuka, pakai warna gelap
+    return isActive ? 'text-gray-800 font-semibold' : 'text-gray-600 font-light';
   }
+
+  if (this.isScrolled) {
+    return isActive ? 'text-white font-semibold' : 'text-white font-light';
+  } else {
+    return isActive ? 'text-[#0090FF] font-semibold' : 'text-gray-400 font-light';
+  }
+}
+
 }

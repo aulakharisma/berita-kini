@@ -1,0 +1,17 @@
+<section class="container mx-auto px-4 py-6 ">
+  <h2 class="mt-10 text-xl font-bold mb-8 capitalize">Kategori: {{ category }}</h2>
+
+  <div *ngIf="isLoading">Loading berita...</div>
+  <div *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <div *ngIf="!isLoading && berita.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- <app-list-news-card></app-list-news-card> -->
+    <app-list-news-card *ngFor="let item of berita" [news]="item"></app-list-news-card>
+  </div>
+
+  <div *ngIf="!isLoading && berita.length > 0">
+  <p class="text-green-500">Jumlah berita: {{ berita.length }}</p>
+</div>
+
+  <!-- <div *ngIf="!isLoading && berita.length === 0">Tidak ada berita untuk kategori ini.</div> -->
+</section>

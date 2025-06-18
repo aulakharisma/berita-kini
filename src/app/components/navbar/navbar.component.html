@@ -1,13 +1,18 @@
 <nav
-  [class]="'sticky py-3 top-0 z-10000 transition-all duration-300 ease-in-out ' +
+  [class]="'sticky py-3 top-0 z-1000 transition-all duration-300 ease-in-out ' +
           (isScrolled ? 'bg-[#0090FF] shadow-md' : 'bg-white shadow-xs border-gray-100')"
 >
-
-  <div class="container mx-auto flex flex-wrap items-center justify-between py-4 font-[Inter,sans-serif]">
+  <div class="container mx-auto flex items-center justify-between py-4 px-4 font-[Inter,sans-serif]">
+    <!-- Logo -->
     <a routerLink="/" class="flex items-center space-x-3">
-      <img [src]="isScrolled ? '/img/logo/logo-white.svg' : '/img/logo/logo.svg'" class="h-10 transition-all duration-300" alt="Logo Berita Kini" />
+      <img
+        [src]="isScrolled ? '/img/logo/logo-white.svg' : '/img/logo/logo.svg'"
+        class="h-10 transition-all duration-300"
+        alt="Logo Berita Kini"
+      />
     </a>
 
+    <!-- Toggle button (mobile only) -->
     <button
       type="button"
       class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none"
@@ -25,36 +30,85 @@
       </svg>
     </button>
 
-    <ul
-      [ngClass]="{
-        'hidden': !isMenuOpen,
-        'block': isMenuOpen,
-        'md:flex': true
-      }"
-      class="space-x-10"
-    >
-      <!-- Beranda -->
+    <!-- DESKTOP MENU -->
+    <ul class="hidden md:flex md:space-x-10">
       <li>
         <a
           routerLink="/"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           #rla="routerLinkActive"
-          [ngClass]="getNavLinkClass(rla.isActive)"
-          class="hover:underline"
-        >Beranda</a>
+          [ngClass]="getNavLinkClass(rla.isActive) + ' hover:underline'"
+        >
+          Beranda
+        </a>
       </li>
 
-      <!-- Semua kategori CNN -->
       <li *ngFor="let cat of categories">
         <a
-          [href]="cat.path"
-          target="_blank"
-          [ngClass]="getTextColor() + ' hover:underline'"
+          [routerLink]="['/', cat.name]"
+          routerLinkActive="active"
+          #rla="routerLinkActive"
+          [ngClass]="getNavLinkClass(rla.isActive) + ' hover:underline capitalize'"
         >
           {{ formatName(cat.name) }}
         </a>
       </li>
     </ul>
-
   </div>
+
+  <!-- MOBILE MENU OVERLAY -->
+  <div
+    class="fixed inset-0 bg-black/20 z-50 md:hidden"
+    *ngIf="isMenuOpen"
+    (click)="toggleMenu()"
+  ></div>
+
+  <!-- MOBILE MENU SIDEBAR -->
+  <ul
+    class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg z-100 transform transition-transform duration-300 ease-in-out md:hidden"
+    [class.translate-x-full]="!isMenuOpen"
+    [class.translate-x-0]="isMenuOpen"
+  >
+    <!-- Close button -->
+    <li class="flex justify-end p-4 border-b border-gray-200">
+      <button (click)="toggleMenu()" class="text-gray-600 hover:text-gray-900">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24">
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </li>
+
+    <!-- Beranda -->
+    <li class="px-6 py-2">
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        #rla="routerLinkActive"
+        [ngClass]="getNavLinkClass(rla.isActive)"
+        class="hover:underline"
+      >
+        Beranda
+      </a>
+    </li>
+
+    <!-- Kategori -->
+    <li *ngFor="let cat of categories" class="px-6 py-2">
+      <a
+        [routerLink]="['/', cat.name]"
+        routerLinkActive="active"
+        #rla="routerLinkActive"
+        [ngClass]="getNavLinkClass(rla.isActive) + ' hover:underline capitalize'"
+      >
+        {{ formatName(cat.name) }}
+      </a>
+    </li>
+  </ul>
 </nav>
